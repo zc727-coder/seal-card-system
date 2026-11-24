@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: seal-card-service
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    hikari:
+      connection-timeout: 5000
+      maximum-pool-size: 10
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 210MB
+  jackson:
+    time-zone: Asia/Shanghai
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+seal:
+  demo-password: ${DEMO_PASSWORD}
+  auth-secret: ${APP_AUTH_SECRET}
+  storage-root: ${SEAL_STORAGE_ROOT:./target/private-images}
+  session-seconds: 28800
+  max-pages: 20
+  max-file-bytes: 10485760
+  max-image-pixels: 40000000
+  retry-limit: 5
+  lease-seconds: 60
+  retry-seconds: 10
+  scheduling-enabled: true

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interview.sealcard.mapper.SealUploadTaskMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.interview.sealcard.domain.SealUploadTask">
+        <id column="id" property="id" />
+        <result column="idempotency_key" property="idempotencyKey" />
+        <result column="request_hash" property="requestHash" />
+        <result column="version_id" property="versionId" />
+        <result column="operator_id" property="operatorId" />
+        <result column="branch_no" property="branchNo" />
+        <result column="request_id" property="requestId" />
+        <result column="payload" property="payload" />
+        <result column="task_status" property="taskStatus" />
+        <result column="retry_count" property="retryCount" />
+        <result column="next_retry_at" property="nextRetryAt" />
+        <result column="lock_owner" property="lockOwner" />
+        <result column="lock_until" property="lockUntil" />
+        <result column="lock_token" property="lockToken" />
+        <result column="last_error_code" property="lastErrorCode" />
+        <result column="last_error_message" property="lastErrorMessage" />
+        <result column="completed_at" property="completedAt" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, idempotency_key, request_hash, version_id, operator_id, branch_no, request_id, payload, task_status, retry_count, next_retry_at, lock_owner, lock_until, lock_token, last_error_code, last_error_message, completed_at, created_at, updated_at
+    </sql>
+
+</mapper>

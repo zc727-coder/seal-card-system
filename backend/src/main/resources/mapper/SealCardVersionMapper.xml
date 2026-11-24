@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interview.sealcard.mapper.SealCardVersionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.interview.sealcard.domain.SealCardVersion">
+        <id column="id" property="id" />
+        <result column="seal_card_id" property="sealCardId" />
+        <result column="version_no" property="versionNo" />
+        <result column="status" property="status" />
+        <result column="effective_from" property="effectiveFrom" />
+        <result column="effective_to" property="effectiveTo" />
+        <result column="created_by" property="createdBy" />
+        <result column="approved_by" property="approvedBy" />
+        <result column="approved_at" property="approvedAt" />
+        <result column="submitted_at" property="submittedAt" />
+        <result column="rejected_by" property="rejectedBy" />
+        <result column="rejected_at" property="rejectedAt" />
+        <result column="reject_reason" property="rejectReason" />
+        <result column="expected_image_count" property="expectedImageCount" />
+        <result column="authorization_ref" property="authorizationRef" />
+        <result column="change_reason" property="changeReason" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, seal_card_id, version_no, status, effective_from, effective_to, created_by, approved_by, approved_at, submitted_at, rejected_by, rejected_at, reject_reason, expected_image_count, authorization_ref, change_reason, created_at, updated_at
+    </sql>
+
+</mapper>

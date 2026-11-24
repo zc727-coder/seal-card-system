@@ -1,0 +1,9 @@
+.env
+.git
+**/node_modules
+**/dist
+**/.idea
+**/*.log
+backend/target/*
+!backend/target/seal-card-service.jar
+artifacts

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interview.sealcard.mapper.SealCardImageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.interview.sealcard.domain.SealCardImage">
+        <id column="id" property="id" />
+        <result column="version_id" property="versionId" />
+        <result column="page_no" property="pageNo" />
+        <result column="image_id" property="imageId" />
+        <result column="sha256" property="sha256" />
+        <result column="mime_type" property="mimeType" />
+        <result column="file_size" property="fileSize" />
+        <result column="storage_status" property="storageStatus" />
+        <result column="created_at" property="createdAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, version_id, page_no, image_id, sha256, mime_type, file_size, storage_status, created_at
+    </sql>
+
+</mapper>

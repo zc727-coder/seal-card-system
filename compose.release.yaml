@@ -1,0 +1,61 @@
+name: seal-card-system
+services:
+  mysql:
+    image: seal-card-mysql:8.4.13
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Initialize .env}
+      MYSQL_DATABASE: seal_card
+      RUNTIME_DB_PASSWORD: ${RUNTIME_DB_PASSWORD:?Initialize .env}
+      TZ: Asia/Shanghai
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci"]
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docs/sql/001_create_tables.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./infra/mysql/02-runtime-user.sh:/docker-entrypoint-initdb.d/02-runtime-user.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$RUNTIME_DB_PASSWORD\" mysql -h127.0.0.1 -useal_runtime seal_card -Nse 'SELECT 1' >/dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 40s
+    restart: unless-stopped
+  backend:
+    image: seal-card-service:1.0.0
+    deploy:
+      replicas: 3
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/seal_card?useUnicode=true&characterEncoding=UTF-8&connectionTimeZone=Asia/Shanghai
+      SPRING_DATASOURCE_USERNAME: seal_runtime
+      SPRING_DATASOURCE_PASSWORD: ${RUNTIME_DB_PASSWORD:?Initialize .env}
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?Initialize .env}
+      APP_AUTH_SECRET: ${APP_AUTH_SECRET:?Initialize .env}
+      SEAL_STORAGE_ROOT: /var/lib/seal-card/images
+      TZ: Asia/Shanghai
+    volumes:
+      - image-data:/var/lib/seal-card/images
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/actuator/health >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 40s
+    restart: unless-stopped
+  nginx:
+    image: seal-card-web:1.0.0
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${HTTP_PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    restart: unless-stopped
+volumes:
+  mysql-data:
+  image-data:
